@@ -1,3 +1,23 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('./layouts/main-layout/main-layout.component')
+        .then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./features/products/pages/product-list/product-list.component')
+            .then(m => m.ProductListComponent)
+      },
+      {
+        path: '',
+        redirectTo: 'products',
+        pathMatch: 'full'
+      }
+    ]
+  }
+];
