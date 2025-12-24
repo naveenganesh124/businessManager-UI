@@ -24,7 +24,11 @@ export class ProductService {
     return this.http.post<string>(`${this.baseUrl}/update`, product);
   }
 
-  deleteProduct(id: number): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/delete`, { id });
-  }
+  deleteProduct(id: number) {
+  return this.http.post('/api/products/delete', {
+      id 
+      
+  },{ responseType: 'text' });
+}
+
 }
