@@ -1,0 +1,39 @@
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+
+        <h2 class="text-center mb-4">Login</h2>
+
+        <form [formGroup]="loginForm">
+
+            <mat-form-field appearance="outline" class="w-100 mb-3">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mb-4">
+                <mat-label>Password</mat-label>
+
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
+
+                <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+
+                    <mat-icon [fontIcon]="hide ? 'visibility' : 'visibility_off'">
+                    </mat-icon>
+
+                </button>
+            </mat-form-field>
+
+
+
+            <button mat-flat-button color="primary" class="w-100" type="button" (click)="login()">
+                Login
+            </button>
+
+            <p class="error text-danger text-center mt-3" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </p>
+
+        </form>
+
+    </div>
+</div>
