@@ -19,10 +19,11 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-MatSnackBarModule
+    MatSnackBarModule
 
   ],
   templateUrl: './product-list.component.html'
+
 })
 export class ProductListComponent {
 
@@ -32,50 +33,72 @@ export class ProductListComponent {
     'brand',
     'price',
     'stock',
-    'isActive',
     'actions'
   ];
 
- dataSource: Product[] = [];
+  dataSource: Product[] = [];
 
- constructor(private productService: ProductService,
-  private dialog: MatDialog,
-  private snackBar: MatSnackBar
- ){
+  constructor(private productService: ProductService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
 
- }
+  }
 
- ngOnInit(): void {
+  ngOnInit(): void {
     this.loadProducts();
   }
 
   loadProducts(): void {
-    this.productService.getProducts().subscribe({
-      next: (products) => {
-        this.dataSource = products;
-      },
-      error: (err) => {
-        console.error('Failed to load products', err);
+  this.productService.getProducts().subscribe({
+    next: (response) => {
+      if (response.success) {
+        this.dataSource = response.data;   
+      } else {
+        console.error('API returned failure', response.errors);
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error('Failed to load products', err);
+    }
+  });
+}
 
-addProduct(): void {
+
+  addProduct(): void {
   const dialogRef = this.dialog.open(ProductFormDialogComponent, {
     width: '500px'
   });
 
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-      this.productService.addProduct(result).subscribe(() => {
-        this.loadProducts();
+      this.productService.addProduct(result).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.snackBar.open(res.message, 'Close', {
+              duration: 3000
+            });
+            this.loadProducts();
+          } else {
+            this.snackBar.open(res.message || 'Failed to add product', 'Close', {
+              duration: 3000
+            });
+          }
+        },
+        error: () => {
+          this.snackBar.open('Failed to add product', 'Close', {
+            duration: 3000
+          });
+        }
       });
     }
   });
 }
 
 
-editProduct(row: Product): void {
+
+
+  editProduct(row: Product): void {
   const dialogRef = this.dialog.open(ProductFormDialogComponent, {
     width: '500px',
     data: row
@@ -83,8 +106,24 @@ editProduct(row: Product): void {
 
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-      this.productService.updateProduct(result).subscribe(() => {
-        this.loadProducts();
+      this.productService.updateProduct(result).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.snackBar.open(res.message, 'Close', {
+              duration: 3000
+            });
+            this.loadProducts();
+          } else {
+            this.snackBar.open(res.message || 'Failed to update product', 'Close', {
+              duration: 3000
+            });
+          }
+        },
+        error: () => {
+          this.snackBar.open('Failed to update product', 'Close', {
+            duration: 3000
+          });
+        }
       });
     }
   });
@@ -92,7 +131,9 @@ editProduct(row: Product): void {
 
 
 
-  deleteProduct(row: Product): void {
+
+
+ deleteProduct(row: Product): void {
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     width: '350px',
     data: `Are you sure you want to delete "${row.productName}"?`
@@ -101,10 +142,17 @@ editProduct(row: Product): void {
   dialogRef.afterClosed().subscribe(confirmed => {
     if (confirmed) {
       this.productService.deleteProduct(row.id!).subscribe({
-        next: () => {
-          this.snackBar.open('Product deleted successfully', 'Close', {
-            duration: 3000
-          });
+        next: (res) => {
+          if (res.success) {
+            this.snackBar.open(res.message, 'Close', {
+              duration: 3000
+            });
+            this.loadProducts();
+          } else {
+            this.snackBar.open(res.message || 'Failed to delete product', 'Close', {
+              duration: 3000
+            });
+          }
         },
         error: () => {
           this.snackBar.open('Failed to delete product', 'Close', {
@@ -115,5 +163,6 @@ editProduct(row: Product): void {
     }
   });
 }
+
 
 }
