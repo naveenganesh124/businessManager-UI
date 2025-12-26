@@ -2,33 +2,56 @@
   {{ isEditMode ? 'Edit Product' : 'Add Product' }}
 </h2>
 
-<form [formGroup]="productForm" mat-dialog-content>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Product Name</mat-label>
-    <input matInput formControlName="productName" />
-  </mat-form-field>
+<form [formGroup]="productForm" mat-dialog-content class="pt-1" >
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Category</mat-label>
-    <input matInput formControlName="category" />
-  </mat-form-field>
+  <div class="container-fluid">
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Brand</mat-label>
-    <input matInput formControlName="brand" />
-  </mat-form-field>
+    <!-- Row 1 -->
+    <div class="row g-3">
+      <div class="col-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Product Name</mat-label>
+          <input matInput formControlName="productName" />
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Price</mat-label>
-    <input matInput type="number" formControlName="price" />
-  </mat-form-field>
+      <div class="col-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Category</mat-label>
+          <input matInput formControlName="category" />
+        </mat-form-field>
+      </div>
+    </div>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Stock</mat-label>
-    <input matInput type="number" formControlName="stock" />
-  </mat-form-field>
+    <!-- Row 2 -->
+    <div class="row g-3 mt-1">
+      <div class="col-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Brand</mat-label>
+          <input matInput formControlName="brand" />
+        </mat-form-field>
+      </div>
 
+      <div class="col-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row g-3 mt-1">
+      <div class="col-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Stock</mat-label>
+          <input matInput type="number" formControlName="stock" />
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
 
 </form>
 
