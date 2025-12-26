@@ -23,6 +23,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 
   ],
   templateUrl: './product-list.component.html'
+
 })
 export class ProductListComponent {
 
@@ -32,7 +33,6 @@ export class ProductListComponent {
     'brand',
     'price',
     'stock',
-    'isActive',
     'actions'
   ];
 

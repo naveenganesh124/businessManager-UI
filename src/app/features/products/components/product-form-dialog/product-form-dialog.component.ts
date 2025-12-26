@@ -42,7 +42,6 @@ export class ProductFormDialogComponent {
       brand: [data?.brand || '', Validators.required],
       price: [data?.price || 0, Validators.required],
       stock: [data?.stock || 0, Validators.required],
-      isActive: [data?.isActive ?? true]
     });
   }
 
