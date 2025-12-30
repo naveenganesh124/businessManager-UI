@@ -1,4 +1,6 @@
 <mat-toolbar color="primary">
-  Business Manager
+  <span>Business Manager</span>
+  <span class="spacer"></span>
+  <button mat-stroked-button color="warn" (click)="logout()">Logout </button>
 </mat-toolbar>
 <router-outlet></router-outlet>
